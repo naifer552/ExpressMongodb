@@ -1,14 +1,12 @@
 require('dotenv').config();
-
+require('./database');
 const express = require('express');
+const routerApi = require('./Routes');
 const app = express();
-
+app.use(express.json());
 const PORT = process.env.SERVER_PORT;
-//  definir rutas
-app.get('/', (req, res) => {
-//  res.send -> response para retornar
-res.send('Hola. Primer servidor en express');
-});
+
+routerApi(app);
 
 // se le indica que debe escuchar en un puerto especifico
 app.listen(PORT, () =>{
