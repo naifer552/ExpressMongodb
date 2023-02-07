@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/naifer552/ExpressMongodb#readme",
   "dependencies": {
+    "@hapi/boom": "^10.0.0",
     "express": "^4.18.2",
     "mongoose": "^6.9.0"
   },

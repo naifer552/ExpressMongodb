@@ -1,5 +1,5 @@
-const res = require('express/lib/response');
 const Product = require('../models/productsModel');
+const boom = require('@hapi/boom');
 
 class ProductsService {
     constructor() {
@@ -10,7 +10,7 @@ class ProductsService {
         this.products = await Product.find();
         const products = this.products;
         if(!products){
-            return alert('error');
+            throw boom.notFound('Products not found');
         };
         return products;
     };
@@ -19,7 +19,7 @@ class ProductsService {
         this.products = await Product.findById(id).lean();
         const products = this.products;
         if(!products){
-            return alert('error');
+            throw boom.notFound('Product not found');
         };
         return products;
     }
@@ -30,7 +30,7 @@ class ProductsService {
         }
 
         if(!newProduct){
-            return alert('error');
+            throw boom.notFound('Product not created');
         };
         const insert = new Product(newProduct);
         await insert.save();
@@ -38,10 +38,16 @@ class ProductsService {
 
     async update(id, body){
         this.products = await Product.findByIdAndUpdate(id, body);
+        if(!this.products){
+            throw boom.notFound('Product not updated');
+        };
     }
 
     async delete(id){
         this.products = await Product.findByIdAndDelete(id);
+        if(!products){
+            throw boom.notFound('Products not deleted');
+        };
         return { id }
     }
 }
